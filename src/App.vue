@@ -1,28 +1,15 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div>
+  <form-item-render></form-item-render>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import formItemRender from "./components/formItemRender.vue"
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+   formItemRender,
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
