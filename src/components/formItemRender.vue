@@ -1,26 +1,29 @@
 <template>
-  <div class='form-wrapper'>
-    <a-form :form="form" layout="inline" size="small">
+  <div class="form-wrapper">
+    <a-form :form="dynamicFormData" layout="inline" size="small">
       <template v-for="(formItem, index) in formItemList">
         <template v-if="formItem.type === 'input'">
           <a-form-item :key="index" :label="formItem.label">
-            <a-input placeholder="Basic usage" :disabled="formItem.disabled" />
+            <a-input
+              placeholder="Basic usage"
+              :disabled="formItem.disabled"
+              v-model="localFormData[formItem.field]"
+            />
           </a-form-item>
         </template>
         <template v-if="formItem.type === 'number'">
           <a-form-item :key="index" :label="formItem.label">
-            <a-input-number :disabled="formItem.disabled"  />
+            <a-input-number :disabled="formItem.disabled" v-model="localFormData[formItem.field]" />
           </a-form-item>
         </template>
         <template v-if="formItem.type === 'date'">
           <a-form-item :key="index" :label="formItem.label">
-            <a-date-picker :disabled="formItem.disabled"/>
+            <a-date-picker :disabled="formItem.disabled" v-model="localFormData[formItem.field]" />
           </a-form-item>
         </template>
         <template v-if="formItem.type === 'checkbox'">
           <a-form-item :key="index" :label="formItem.label">
-            <a-checkbox :disabled="formItem.disabled">
-            </a-checkbox>
+            <a-checkbox :disabled="formItem.disabled" v-model="localFormData[formItem.field]" />
           </a-form-item>
         </template>
       </template>
@@ -35,9 +38,39 @@ export default {
       default() {
         return []
       }
+    },
+    dynamicFormData: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
+  },
+  data() {
+    return {
+      localFormData: { ...this.dynamicFormData },
+      syncing: false
+    }
+  },
+  watch: {
+    dynamicFormData: {
+      handler(newVal) {
+        this.localFormData = { ...newVal }
+      },
+      deep: true
+    },
+    localFormData: {
+      handler() {
+        if (this.syncing) return
+        this.syncing = true
+        this.$emit('update:dynamic-form-data', { ...this.localFormData })
+        this.$nextTick(() => {
+          this.syncing = false
+        })
+      },
+      deep: true
     }
   }
-
 }
 </script>
 
