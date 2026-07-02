@@ -11,19 +11,24 @@
             />
           </a-form-item>
         </template>
-        <template v-if="formItem.type === 'number'">
+        <template v-else-if="formItem.type === 'number'">
           <a-form-item :key="index" :label="formItem.label">
             <a-input-number :disabled="formItem.disabled" v-model="localFormData[formItem.field]" />
           </a-form-item>
         </template>
-        <template v-if="formItem.type === 'date'">
+        <template v-else-if="formItem.type === 'date'">
           <a-form-item :key="index" :label="formItem.label">
             <a-date-picker :disabled="formItem.disabled" v-model="localFormData[formItem.field]" />
           </a-form-item>
         </template>
-        <template v-if="formItem.type === 'checkbox'">
+        <template v-else-if="formItem.type === 'checkbox'">
           <a-form-item :key="index" :label="formItem.label">
             <a-checkbox :disabled="formItem.disabled" v-model="localFormData[formItem.field]" />
+          </a-form-item>
+        </template>
+        <template v-else-if="formItem.type === 'rate'">
+          <a-form-item :key="index" :label="formItem.label">
+            <a-rate v-model="localFormData[formItem.field]" :disabled="formItem.disabled" />
           </a-form-item>
         </template>
       </template>
@@ -48,7 +53,7 @@ export default {
   },
   data() {
     return {
-      localFormData: { ...this.dynamicFormData },
+      localFormData: { ...this.dynamicFormData }, // 本地表单数据(其实是一个副本)
       syncing: false
     }
   },

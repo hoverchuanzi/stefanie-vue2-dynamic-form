@@ -53,5 +53,16 @@
     "defaultValue": "",
     "placeholder": "",
     "span": 12
+  },
+  {
+    "field": "rate",
+    "label": "评分",
+    "type": "rate",
+    "required": true,
+    "visible": true,
+    "disabled": false,
+    "defaultValue": "",
+    "placeholder": "",
+    "span": 12
   }
 ]
